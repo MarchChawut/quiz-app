@@ -3,6 +3,8 @@ import Menu from "./components/Menu";
 import Quiz from "./components/Quiz";
 import Score from "./components/Score";
 
+import './App.css'
+
 //ใช้ createContext
 export const DataContext = createContext()
 
