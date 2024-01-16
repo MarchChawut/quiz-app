@@ -5,7 +5,7 @@ const QuestionsData = [
         B: "2",
         C: "3",
         D: "4",
-        answer: "2"
+        answer: "A"
     },
     {
         question: "1 + 2 ?",

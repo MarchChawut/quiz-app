@@ -11,6 +11,7 @@ export const DataContext = createContext()
 function App() {
   // ใช้ useState
   const [appState, setAppState] = useState("menu")
+
   return (
     //ให้บริการเกี่ยวกับข้อมูลชุดหนึ่ง
     <DataContext.Provider value={{ appState, setAppState }}>
