@@ -1,31 +1,46 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import QuestionsData from "../data/QuestionsData"
+import { DataContext } from "../App"
 
 const Quiz = () => {
     // console.log(QuestionsData)
     const [current, setCurrent] = useState(0)
-    const [selectCoice, setSelectCoice] = useState("")
+    const [selectChoice, setSelectChoice] = useState("")
+    const { score, setScore, setAppState } = useContext(DataContext)
 
     //ตรวจสอบว่ามีการเปลี่ยนแปลงใน selectCoice? ถ้ามี ก็คือ user ได้ทำการเลือกคำตอบแล้ว
     useEffect(() => {
         checkAnswer()
-    }, [selectCoice])
+    }, [selectChoice])
 
     const checkAnswer = () => {
-        if(selectCoice !== ""){
-            if(selectCoice === QuestionsData[current].answer){
-                console.log("ถูก")
-            }else console.log("ผิด")
+        if(selectChoice !== ""){
+            if(selectChoice === QuestionsData[current].answer){
+                // console.log("ถูก")
+                setScore(score + 1)
+                nextQuestion()
+            }else {
+                console.log("ตอบผิด -> ไม่ได้คะแนน!")
+                nextQuestion()
+            }
         }
     }
+
+    const nextQuestion = () => {
+        setSelectChoice("")
+        if(current === QuestionsData.length - 1){ //index 0 - 4
+            setAppState("score")
+        }else setCurrent(current + 1)
+    }
+
     return (
         <div className="quiz">
             <h1>{QuestionsData[current].question}</h1>
             <div className="choices">
-                <button onClick={() => setSelectCoice("A")}>{ QuestionsData[current].A }</button>
-                <button onClick={() => setSelectCoice("B")}>{ QuestionsData[current].B }</button>
-                <button onClick={() => setSelectCoice("C")}>{ QuestionsData[current].C }</button>
-                <button onClick={() => setSelectCoice("D")}>{ QuestionsData[current].D }</button>
+                <button onClick={() => setSelectChoice("A")}>{ QuestionsData[current].A }</button>
+                <button onClick={() => setSelectChoice("B")}>{ QuestionsData[current].B }</button>
+                <button onClick={() => setSelectChoice("C")}>{ QuestionsData[current].C }</button>
+                <button onClick={() => setSelectChoice("D")}>{ QuestionsData[current].D }</button>
             </div>
             <p>{ `${current + 1} / ${QuestionsData.length}` }</p>
         </div>
